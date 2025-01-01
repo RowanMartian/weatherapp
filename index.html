@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Weather Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+    <!-- Google Fonts for custom font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c; /* Dark background */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #f4f4f4; /* Light text for contrast */
+            background-size: cover;
+            background-position: center;
+            transition: background 0.5s ease-in-out;
+        }
+
+        /* Profile Picture and Name */
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+        }
+
+        .profile-container img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-container .profile-text {
+            margin-top: 10px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .profile-container .profile-text:hover {
+            color: #4CAF50; /* Green hover effect */
+        }
+
+        /* Frosted Glass Effect */
+        .weather-container {
+            text-align: left;
+            background-color: rgba(28, 28, 28, 0.8); /* Dark grey with opacity */
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); /* Large soft shadow */
+            width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            backdrop-filter: blur(15px); /* Frosted glass effect */
+            margin-bottom: 20px; /* Space between weather info and search bar */
+        }
+
+        /* Title Styles - Bold and Italic */
+        h1 {
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 40px; /* Larger title font size */
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 2px; /* Slight letter spacing for effect */
+        }
+
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .info-box {
+            flex-basis: 45%;
+            background-color: rgba(255, 255, 255, 0.1); /* Light transparency for each info box */
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Soft shadow */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .info-box p {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-box span {
+            font-weight: bold;
+        }
+
+        .info-box .wi {
+            margin-right: 10px;
+            font-size: 30px; /* Icon size */
+            color: #4CAF50; /* Icon color matches search button */
+        }
+
+        /* Location Text on Left */
+        #location {
+            font-size: 24px; /* Larger font size for location */
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        #location .location-text {
+            color: #ccc; /* Light grey color for "Location" text */
+            margin-right: 5px;
+        }
+
+        #location .actual-location {
+            color: #fff; /* White color for actual location */
+        }
+
+        /* Search Bar Styles */
+        .search-container {
+            text-align: center;
+            width: 450px;
+            padding: 10px 15px; /* Increased padding slightly */
+            background-color: rgba(28, 28, 28, 0.8); /* Dark background with opacity */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-top: 10px; /* Reduced margin to move the search bar closer */
+            backdrop-filter: blur(10px); /* Frosted effect for search bar */
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            padding: 12px; /* Increased padding on the text input */
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 70%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 20px; /* Adjusted button padding */
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            font-size: 18px;
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .loading {
+            font-size: 16px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Profile section -->
+    <div class="profile-container">
+        <img src="https://i.imgur.com/fzztYmZ.jpeg" alt="Profile Picture">
+        <div class="profile-text" onclick="window.location.href='https://github.com/RowanMartian'">
+            RowanMartian
+        </div>
+    </div>
+
+    <div class="weather-container">
+        <h1>Weather App</h1>
+        
+        <!-- Location text on left with color customization -->
+        <p id="location" class="loading">
+            <span class="location-text">Location:</span>
+            <span class="actual-location">Loading...</span>
+        </p>
+
+        <div class="info-container">
+            <!-- Left Column: Basic Info -->
+            <div class="info-box">
+                <p><i class="wi wi-thermometer"></i><span>Temperature:</span> <span id="temperature" class="loading">-- °C</span></p>
+                <p><i class="wi wi-cloudy"></i><span>Weather:</span> <span id="description" class="loading">--</span></p>
+                <p><i class="wi wi-thermometer-exterior"></i><span>Feels like:</span> <span id="feels-like" class="loading">-- °C</span></p>
+                <p><i class="wi wi-humidity"></i><span>Humidity:</span> <span id="humidity" class="loading">--%</span></p>
+            </div>
+
+            <!-- Right Column: Advanced Info -->
+            <div class="info-box">
+                <p><i class="wi wi-strong-wind"></i><span>Wind Speed:</span> <span id="wind-speed" class="loading">-- m/s</span></p>
+                <p><i class="wi wi-wind-beaufort-0"></i><span>Visibility:</span> <span id="visibility" class="loading">-- km</span></p>
+                <p><i class="wi wi-sunrise"></i><span>UV Index:</span> <span id="uv-index" class="loading">--</span></p>
+                <p><i class="wi wi-time-4"></i><span>Dew Point:</span> <span id="dew-point" class="loading">-- °C</span></p>
+            </div>
+        </div>
+
+        <p id="error-message" class="error"></p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Enter city name">
+            <button onclick="searchWeather()">Search</button>
+        </div>
+    </div>
+
+    <script>
+        const weatherBackgrounds = {
+            snow: 'https://images.pexels.com/photos/612960/pexels-photo-612960.jpeg',
+            rain: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            overcast: 'https://images.unsplash.com/photo-1527070414767-e5681a50942f?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            sunny: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            cloudy: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            storm: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        };
+
+        function getLocationWeather() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=f30fcffc99cf4e1d2a78c30300a47ed2&units=metric`;
+
+                    fetch(weatherUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.cod === 200) {
+                                displayWeather(data);
+                                changeBackground(data.weather[0].description);
+                            } else {
+                                showError('Unable to retrieve weather data.');
+                            }
+                        })
+                        .catch(err => showError('Error fetching weather data.'));
+                });
+            } else {
+                showError('Geolocation is not supported by this browser.');
+            }
+        }
+
+        function searchWeather() {
+            const city = document.getElementById('city-input').value.trim();
+
+            if (city) {
+                const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f30fcffc99cf4e1d2a78c30300a47ed2&units=metric`;
+
+                fetch(weatherUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.cod === 200) {
+                            displayWeather(data);
+                            changeBackground(data.weather[0].description);
+                        } else {
+                            showError('City not found.');
+                        }
+                    })
+                    .catch(err => showError('Error fetching weather data.'));
+            } else {
+                showError('Please enter a city name.');
+            }
+        }
+
+        function displayWeather(weatherData) {
+            const location = weatherData.name + ', ' + weatherData.sys.country;
+            const temperature = weatherData.main.temp;
+            const description = weatherData.weather[0].description;
+            const humidity = weatherData.main.humidity;
+            const feelsLike = weatherData.main.feels_like;
+            const windSpeed = weatherData.wind.speed;
+            const uvIndex = 'N/A';
+            const dewPoint = weatherData.main.dew_point;
+            const visibility = weatherData.visibility / 1000;
+
+            document.getElementById('location').innerHTML = `
+                <span class="location-text">Location:</span>
+                <span class="actual-location">${location}</span>
+            `;
+            document.getElementById('temperature').textContent = `${temperature} °C`;
+            document.getElementById('description').textContent = description;
+            document.getElementById('humidity').textContent = `Humidity: ${humidity}%`;
+            document.getElementById('feels-like').textContent = `Feels like: ${feelsLike} °C`;
+            document.getElementById('wind-speed').textContent = `Wind Speed: ${windSpeed} m/s`;
+            document.getElementById('uv-index').textContent = `UV Index: ${uvIndex}`;
+            document.getElementById('dew-point').textContent = `Dew Point: ${dewPoint} °C`;
+            document.getElementById('visibility').textContent = `Visibility: ${visibility} km`;
+            document.getElementById('error-message').textContent = '';
+        }
+
+        function changeBackground(description) {
+            let backgroundUrl;
+
+            if (description.includes('snow')) {
+                backgroundUrl = weatherBackgrounds.snow;
+            } else if (description.includes('rain')) {
+                backgroundUrl = weatherBackgrounds.rain;
+            } else if (description.includes('clouds') || description.includes('overcast')) {
+                backgroundUrl = weatherBackgrounds.overcast;
+            } else if (description.includes('clear') || description.includes('sun')) {
+                backgroundUrl = weatherBackgrounds.sunny;
+            } else if (description.includes('storm')) {
+                backgroundUrl = weatherBackgrounds.storm;
+            } else {
+                backgroundUrl = weatherBackgrounds.cloudy;
+            }
+
+            document.body.style.backgroundImage = `url(${backgroundUrl})`;
+        }
+
+        function showError(message) {
+            document.getElementById('location').textContent = 'Unable to retrieve location';
+            document.getElementById('temperature').textContent = '-- °C';
+            document.getElementById('description').textContent = '--';
+            document.getElementById('humidity').textContent = '--%';
+            document.getElementById('feels-like').textContent = '-- °C';
+            document.getElementById('wind-speed').textContent = '-- m/s';
+            document.getElementById('uv-index').textContent = '--';
+            document.getElementById('dew-point').textContent = '-- °C';
+            document.getElementById('visibility').textContent = '-- km';
+            document.getElementById('error-message').textContent = message;
+        }
+
+        // Call getLocationWeather when the page loads
+        getLocationWeather();
+    </script>
+
+</body>
+</html>

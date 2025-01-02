@@ -27,10 +27,7 @@
         /* Mobile Layout */
         @media (max-width: 768px) {
             .profile-container {
-                position: relative;
-                top: 10px;
-                right: 10px;
-                text-align: center;
+                display: none; /* Hide profile container */
             }
 
             .weather-container {
@@ -159,13 +156,6 @@
             text-align: center;
             margin-bottom: 20px;
             letter-spacing: 2px;
-        }
-
-        .info-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
         }
 
         .search-container {
@@ -334,25 +324,28 @@
             const feelsLike = weatherData.main.feels_like;
             const windSpeed = weatherData.wind.speed;
             const uvIndex = 'N/A';
-            const dewPoint = weatherData.main.dew_point;
-            const visibility = weatherData.visibility / 1000;
+            const dewPoint = 'N/A';
+            const visibility = Math.round(weatherData.visibility / 1000);
 
-            document.getElementById('location').innerHTML = `
-                <span class="location-text">Location:</span>
-                <span class="actual-location">${location}</span>
-            `;
-            document.getElementById('temperature').textContent = `${temperature} °C`;
+            document.getElementById('location').textContent = location;
+            document.getElementById('temperature').textContent = temperature + '°C';
             document.getElementById('description').textContent = description;
-            document.getElementById('humidity').textContent = `${humidity}%`;
-            document.getElementById('feels-like').textContent = `${feelsLike} °C`;
-            document.getElementById('wind-speed').textContent = `${windSpeed} m/s`;
-            document.getElementById('uv-index').textContent = `${uvIndex}`;
-            document.getElementById('dew-point').textContent = `${dewPoint} °C`;
-            document.getElementById('visibility').textContent = `${visibility} km`;
+            document.getElementById('humidity').textContent = humidity + '%';
+            document.getElementById('feels-like').textContent = feelsLike + '°C';
+            document.getElementById('wind-speed').textContent = windSpeed + ' m/s';
+            document.getElementById('uv-index').textContent = uvIndex;
+            document.getElementById('dew-point').textContent = dewPoint + '°C';
+            document.getElementById('visibility').textContent = visibility + ' km';
+
             document.getElementById('error-message').textContent = '';
         }
 
         function changeBackground(description) {
+            if (window.innerWidth <= 768) {
+                // Skip background change for mobile layout
+                return;
+            }
+
             let backgroundUrl;
 
             if (description.includes('snow')) {
@@ -373,21 +366,10 @@
         }
 
         function showError(message) {
-            document.getElementById('location').textContent = 'Unable to retrieve location';
-            document.getElementById('temperature').textContent = '-- °C';
-            document.getElementById('description').textContent = '--';
-            document.getElementById('humidity').textContent = '--%';
-            document.getElementById('feels-like').textContent = '-- °C';
-            document.getElementById('wind-speed').textContent = '-- m/s';
-            document.getElementById('uv-index').textContent = '--';
-            document.getElementById('dew-point').textContent = '-- °C';
-            document.getElementById('visibility').textContent = '-- km';
             document.getElementById('error-message').textContent = message;
         }
 
-        // Call getLocationWeather when the page loads
         getLocationWeather();
     </script>
-
 </body>
 </html>

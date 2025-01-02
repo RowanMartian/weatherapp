@@ -26,9 +26,3 @@ This is a simple weather app that fetches live weather data for your location or
 - JavaScript
 - OpenWeatherMap API
 - Geolocation API
-
-## Installation
-You can easily clone or download this repository and run it locally on your machine. Here's how:
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/RowanMartian/weather-app.git

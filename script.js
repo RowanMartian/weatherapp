@@ -1,5 +1,5 @@
 const weatherBackgrounds = {
-    snow: 'https://images.pexels.com/photos/612960/pexels-photo-612960.jpeg',
+    snow: 'https://i.imgur.com/bBMF3RE.jpeg',
     rain: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     overcast: 'https://images.pexels.com/photos/29968129/pexels-photo-29968129/free-photo-of-cape-disappointment-lighthouse-on-a-cloudy-day.jpeg',
     sunny: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',

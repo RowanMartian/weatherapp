@@ -1,10 +1,10 @@
 const weatherBackgrounds = {
-    snow: 'https://i.imgur.com/bBMF3RE.jpeg',
-    rain: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    snow: 'https://i.imgur.com/ZSY7z89.jpeg',
+    rain: 'https://i.imgur.com/jxRGSqO.jpeg',
     overcast: 'https://images.pexels.com/photos/29968129/pexels-photo-29968129/free-photo-of-cape-disappointment-lighthouse-on-a-cloudy-day.jpeg',
     sunny: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     cloudy: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    storm: 'https://images.pexels.com/photos/912364/pexels-photo-912364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    storm: 'https://i.imgur.com/MZ65XwL.jpeg'
 };
 
 function getLocationWeather() {

@@ -1,0 +1,213 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #f4f4f4;
+    background-size: cover;
+    background-position: center;
+    transition: background 0.5s ease-in-out;
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+    .profile-container {
+        display: none;
+    }
+
+    .weather-container {
+        width: 100%;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: none;
+    }
+
+    .info-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .info-box {
+        width: 100%;
+        padding: 10px;
+        box-shadow: none;
+        margin-bottom: 10px;
+    }
+
+    .info-box p {
+        font-size: 16px;
+    }
+
+    .search-container {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .search-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+
+    body {
+        background-image: none !important;
+    }
+}
+
+/* Desktop Layout */
+@media (min-width: 769px) {
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        text-align: center;
+    }
+
+    .profile-container img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .weather-container {
+        text-align: left;
+        background-color: rgba(28, 28, 28, 0.8);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        width: 800px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        backdrop-filter: blur(15px);
+        margin-bottom: 20px;
+    }
+
+    .info-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .info-box {
+        flex-basis: 45%;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-box p {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #fff;
+        display: flex;
+        align-items: center;
+    }
+
+    .info-box .wi {
+        margin-right: 10px;
+        font-size: 40px;
+        color: #4CAF50;
+    }
+
+    .info-box span {
+        font-size: 18px;
+    }
+}
+
+h1 {
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.search-container {
+    text-align: center;
+    width: 450px;
+    padding: 10px 15px;
+    background-color: rgba(28, 28, 28, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+input[type="text"] {
+    padding: 12px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 70%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.error {
+    font-size: 18px;
+    color: red;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.loading {
+    font-size: 16px;
+    color: #ccc;
+}
